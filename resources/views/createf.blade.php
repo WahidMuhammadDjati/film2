@@ -48,7 +48,12 @@
                         <td class="border border-gray-300 p-2">{{ $film->rating }}</td>
                         <td class="border border-gray-300 p-2">{{ $film->durasi }} menit</td>
                         <td class="border border-gray-300 p-2 space-x-2">
-                            <a href="{{ route('films.edit', $film->id) }}" class="text-blue-500">Edit</a>
+                            <div x-data="{ open: false }">
+                                {{-- <a href="#" @click="open = true" class="text-blue-500">Edit</a> --}}
+                            
+                                @include('editf-form')
+                            </div>
+                            {{-- <a href="{{ route('films.edit', $film->id) }}" class="text-blue-500">Edit</a> --}}
                             <form action="{{ route('films.destroy', $film->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
