@@ -9,7 +9,7 @@
 
 
 
-<div     class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl mx-auto">
+<div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl mx-auto">
     <h2 class="text-xl font-semibold mb-4 text-center">Edit Film</h2>
     <form action="{{ route('films.update', $film->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
