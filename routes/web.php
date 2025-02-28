@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\TahunController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\TahunController;
+use App\Http\Controllers\NegaraController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\NegaraController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -89,6 +90,13 @@ Route::post('/negara/store', [NegaraController::class, 'store'])->name('negara.s
 // Negara delete
 Route::delete('/negara/{id}', action: [NegaraController::class, 'destroy'])->name('negara.destroy');
 
+
+
+
+// User
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+// User delete
+Route::delete('/delete/{id}', action: [UserController::class, 'destroy'])->name('users.destroy');
 
 
 
