@@ -73,8 +73,11 @@ class NegaraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Negara $negara)
+    public function destroy($id) // menghapus data film
     {
-        //
+        $negara = Negara::findOrFail($id);
+        $negara->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Film berhasil dihapus!');
     }
 }

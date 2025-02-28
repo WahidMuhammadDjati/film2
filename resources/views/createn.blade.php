@@ -22,14 +22,14 @@
                     <tr>
                         {{-- <td class="border border-gray-300 p-2">{{ $genre->id }}</td> --}}
                         <td class="border border-gray-300 p-2">{{ $negara->nama_negara }}</td>
-                        {{-- <td class="border border-gray-300 p-2 space-x-2">
-                            <a href="{{ route('genre.edit', $genre->id) }}" class="text-blue-500">Edit</a>
-                            <form action="{{ route('genre.destroy', $genre->id) }}" method="POST" class="inline">
+                        <td class="border border-gray-300 p-2 space-x-2">
+                            {{-- <a href="{{ route('genre.edit', $genre->id) }}" class="text-blue-500">Edit</a> --}}
+                            <form action="{{ route('negara.destroy', $negara->id) }}" method="POST" class="inline">
                                 @csrf
-                                @method('DELETE')x  
+                                @method('DELETE')
                                 <button type="submit" class="text-red-500" onclick="return confirm('Yakin ingin menghapus film ini?')">Hapus</button>
                             </form>
-                        </td> --}}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

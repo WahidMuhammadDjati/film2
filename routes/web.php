@@ -72,6 +72,13 @@ Route::put('/genre/{id}', [GenreController::class, 'update'])->name('genre.updat
 Route::get('createt', [TahunController::class, 'create'])->name('tahun.create');
 // Tahun create
 Route::post('/tahun/store', [TahunController::class, 'store'])->name('tahun.store');
+// Tahun delete
+Route::delete('/tahun/{id}', action: [TahunController::class, 'destroy'])->name('tahun.destroy');
+// Tahun edit
+Route::get('/tahun/{id}/edit', [TahunController::class, 'edit'])->name('tahun.edit');
+// Tahun update waktu edit
+Route::put('/tahun/{id}', [TahunController::class, 'update'])->name('tahun.update');
+
 
 
 
@@ -79,6 +86,10 @@ Route::post('/tahun/store', [TahunController::class, 'store'])->name('tahun.stor
 Route::get('createn', [NegaraController::class, 'create'])->name('negara.create');
 // Negara create
 Route::post('/negara/store', [NegaraController::class, 'store'])->name('negara.store');
+// Negara delete
+Route::delete('/negara/{id}', action: [NegaraController::class, 'destroy'])->name('negara.destroy');
+
+
 
 
 

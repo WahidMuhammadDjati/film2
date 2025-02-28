@@ -58,24 +58,39 @@ class TahunController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tahun $tahun)
+    public function edit($id)
     {
-        //
+        $tahun = Tahun::findOrFail($id); // Ambil data genre berdasarkan ID
+        $tahuns = Tahun::all(); // Ambil semua genre (jika perlu untuk select dropdown)
+        
+        return view('editt-form', compact('tahun', 'tahuns'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tahun $tahun)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_tahun' => 'required|string|max:4', // Tahun biasanya terdiri dari 4 digit
+        ]);
+    
+        $tahun = Tahun::findOrFail($id);
+        $tahun->nama_tahun = $request->nama_tahun;
+        $tahun->save();
+    
+        return redirect()->route('admin.dashboard')->with('success', 'Tahun berhasil diperbarui.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tahun $tahun)
+    public function destroy($id) // menghapus data film
     {
-        //
+        $tahun = Tahun::findOrFail($id);
+        $tahun->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Film berhasil dihapus!');
     }
 }
