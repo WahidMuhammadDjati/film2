@@ -24,6 +24,12 @@ class Film extends Model
     {
         return $this->belongsTo(Tahun::class);
     }
+
+        public function komentar()
+    {
+        return $this->hasMany(Komentar::class);
+    }
+
 }
 
 

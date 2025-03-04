@@ -32,14 +32,16 @@
     -->
     {{-- <x-film :films="$films"/> --}}
     
-    @include('components.navbar')
+    @props(['films'])      
+    @include('components.navbar', ['films' => $films])
 <div class="p-6">
     @props(['films'])      
     @include('components.slide',['films' => $films])
 </div>
 <div class="p-5">
     @props(['films'])  {{-- Tambahkan props untuk menerima data films --}}
-    @include('components.film', ['films' => $films])
+    @include('components.films', ['films' => $films])
+    {{-- {{ $slot }} --}}
 </div>
         
         

@@ -28,8 +28,14 @@
                     </div>
                     <div>
                         <label class="block text-sm">Gambar:</label>
-                        <input type="file" name="gambar" class="w-full border p-2 rounded-md">
-                    </div>
+                        <input type="file" name="gambar" class="w-full border rounded-md">
+                        @if($film->gambar)
+                            <div class="mt-2">
+                                <p class="text-sm text-gray-500">Gambar saat ini:</p>
+                                <img src="{{ asset('storage/' . $film->gambar) }}" alt="Gambar Film" class="w-5 h-5 object-cover rounded-md">
+                            </div>
+                        @endif
+                    </div>                    
                     <div>
                         <label class="block text-sm">Trailer:</label>
                         <input type="url" name="trailer" value="{{ $film->trailer }}" class="w-full border p-2 rounded-md" required>

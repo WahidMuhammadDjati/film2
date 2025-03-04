@@ -24,7 +24,17 @@
                 <h5 class="text-lg font-semibold mt-1">{{ $film->nama }}</h5>
                 
                 <!-- Tombol Watchlist -->
+                
                 <button class="w-full bg-gray-700 text-white py-1 mt-2 rounded-md">+ Watchlist</button>
+                
+                {{-- @foreach ($films as $film)
+                <div class="bg-gray-800 p-4 rounded-lg">
+                <h3 class="text-xl font-bold">{{ $film->judul }}</h3>
+                <a href="{{ route('film.show', $film->id) }}" class="text-blue-400 hover:underline">Lihat Detail</a>
+                </div>
+                @endforeach --}}
+
+                <a href="{{ route('film.show', $film->id) }}" class="w-full block text-center bg-gray-900 text-white py-1 mt-2 rounded-md">=APENI?=</a>
                 
                 <!-- Tombol Trailer -->
                 <a href="{{ $film->trailer }}" target="_blank" class="w-full block text-center bg-gray-900 text-white py-1 mt-2 rounded-md">▶ Trailer</a>

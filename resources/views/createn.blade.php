@@ -23,6 +23,11 @@
                         {{-- <td class="border border-gray-300 p-2">{{ $genre->id }}</td> --}}
                         <td class="border border-gray-300 p-2">{{ $negara->nama_negara }}</td>
                         <td class="border border-gray-300 p-2 space-x-2">
+                            <div x-data="{ open: false }">
+                                {{-- <a href="#" @click="open = true" class="text-blue-500">Edit</a> --}}
+                            
+                                @include('editn-form')
+                            </div>
                             {{-- <a href="{{ route('genre.edit', $genre->id) }}" class="text-blue-500">Edit</a> --}}
                             <form action="{{ route('negara.destroy', $negara->id) }}" method="POST" class="inline">
                                 @csrf

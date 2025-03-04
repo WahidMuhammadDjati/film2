@@ -6,6 +6,7 @@ use App\Models\Film;
 use App\Models\Genre;
 use App\Models\Tahun;
 use App\Models\Negara;
+use App\Models\Komentar;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\View;
@@ -148,5 +149,17 @@ class FilmController extends Controller
 
     return redirect()->route('admin.dashboard')->with('success', 'Film berhasil diperbarui!');
 }
+
+
+
+
+    public function show($id)
+    {
+        $film = Film::findOrFail($id);
+        $komentar = Komentar::where('film_id', $id)->latest()->get(); // Ambil komentar berdasarkan film_id
+
+        return view('film', compact('film', 'komentar'));
+    }
+
 
 }

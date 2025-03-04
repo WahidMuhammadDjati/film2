@@ -57,17 +57,28 @@ class NegaraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Negara $negara)
+    public function edit($id)
     {
-        //
+        $negara = Negara::findOrFail($id); // Ambil data genre berdasarkan ID
+        $negaras = Negara::all(); // Ambil semua genre (jika perlu untuk select dropdown)
+        
+        return view('editn-form', compact('negara', 'negaras'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Negara $negara)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_negara' => 'required|string|max:255',
+        ]);
+    
+        $negara = Negara::findOrFail($id);
+        $negara->nama_negara = $request->nama_negara;
+        $negara->save();
+    
+        return redirect()->route('admin.dashboard')->with('success', 'Genre berhasil diperbarui.');
     }
 
     /**

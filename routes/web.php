@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Komentar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
@@ -7,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\TahunController;
 use App\Http\Controllers\NegaraController;
+use App\Http\Controllers\KomentarController;
+use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -16,6 +19,10 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+});
+
+Route::get('/film', function () {
+    return view('film');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -42,7 +49,7 @@ Route::get('/admin', function () {
 Route::get('/dashboard', [FilmController::class, 'index'])->name('user.dashboard')->middleware('auth');
 
 
-// Film show
+// Films show
 // Route::get('/films/create', action: [FilmController::class, 'create'])->name('films.create');
 Route::get('/createf', [FilmController::class, 'indexx'])->name('films.createf');
 // Film create
@@ -54,6 +61,8 @@ Route::get('/films/{id}/edit', [FilmController::class, 'edit'])->name('films.edi
 // Film update waktu edit
 Route::put('/films/{id}', [FilmController::class, 'update'])->name('films.update');
 
+//Film sh
+Route::get('/film/{id}', [FilmController::class, 'show'])->name('film.show');
 
 
 // Genre
@@ -89,6 +98,11 @@ Route::get('createn', [NegaraController::class, 'create'])->name('negara.create'
 Route::post('/negara/store', [NegaraController::class, 'store'])->name('negara.store');
 // Negara delete
 Route::delete('/negara/{id}', action: [NegaraController::class, 'destroy'])->name('negara.destroy');
+// Negara edit
+Route::get('/negara/{id}/edit', [NegaraController::class, 'edit'])->name('negara.edit');
+// Negara update waktu edit
+Route::put('/negara/{id}', [NegaraController::class, 'update'])->name('negara.update');
+
 
 
 
@@ -98,6 +112,17 @@ Route::get('/users', [UserController::class, 'index'])->name('users.index');
 // User delete
 Route::delete('/delete/{id}', action: [UserController::class, 'destroy'])->name('users.destroy');
 
+
+
+
+// Komentar
+Route::post('/film/{film}/komentar', [KomentarController::class, 'store'])->middleware('auth')->name('komentar.store');
+
+// use App\Http\Controllers\WatchlistController;
+
+Route::post('/watchlist/add/{id}', [WatchlistController::class, 'add'])->name('watchlist.add');
+Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
+Route::post('/watchlist/remove/{id}', [WatchlistController::class, 'remove'])->name('watchlist.remove');
 
 
 
