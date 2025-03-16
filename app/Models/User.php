@@ -66,6 +66,19 @@ class User extends Authenticatable
     //     return $this->hasMany(Post::class, 'author_id');
     // }
     
-   
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+    
+    public function isAuthor()
+    {
+        return $this->role === 'author';
+    }
+        public function films()
+    {
+        return $this->hasMany(Film::class);
+    }
+
     
 }

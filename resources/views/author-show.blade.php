@@ -6,7 +6,7 @@
         {{-- <button onclick="openModal()" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">Tambah Film</button> --}}
 
         <!-- Include Form Tambah Film -->
-        @include('createf-form')
+        @include('author-create')
         {{-- @include('editf-form') --}}
 
         <table class="w-full border-collapse border border-gray-300">

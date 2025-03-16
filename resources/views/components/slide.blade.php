@@ -1,7 +1,7 @@
 <div id="indicators-carousel" class="mt-10 mx-auto relative" data-carousel="slide" data-carousel-ride="carousel" data-carousel-interval="3000">
     <!-- Carousel wrapper -->
     <div class="relative h-56 md:h-96 overflow-hidden rounded-lg">
-        @foreach ($films as $index => $film)
+        @foreach ($slideFilms as $index => $film)
             <div class="{{ $index === 0 ? 'block' : 'hidden' }} duration-700 ease-in-out" data-carousel-item>
                 <img src="{{ asset('storage/' . $film->gambar) }}" 
                      class="absolute block w-full h-full object-cover top-0 left-0" 
@@ -13,7 +13,7 @@
 
     <!-- Slider indicators -->
     <div class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
-        @foreach ($films as $index => $film)
+        @foreach ($slideFilms as $index => $film)
             <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $index === 0 ? 'true' : 'false' }}" data-carousel-slide-to="{{ $index }}"></button>
         @endforeach
     </div>

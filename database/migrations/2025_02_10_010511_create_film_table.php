@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('films', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Menyimpan siapa yang menambahkan film
             $table->string('nama', 255);
             $table->string('gambar', 255);
             $table->text('trailer'); // URL biasanya panjang, jadi pakai text
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->string('tahun_id'); // Menggunakan tipe `year`
             $table->string('negara_id', 100);
             $table->tinyInteger('rating')->unsigned()->default(0);
-            $table->integer('durasi')->nullable(); // Tambahkan nama kolom yang hilang
+            $table->integer('durasi')->nullable();
             $table->timestamps();
         });
     }

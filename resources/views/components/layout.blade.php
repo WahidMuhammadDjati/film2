@@ -31,19 +31,43 @@
       ````
     -->
     {{-- <x-film :films="$films"/> --}}
+    @if(session('welcome_message'))
+    <div id="flash-message" class="bg-green-500 text-white p-4 mb-4">
+        {{ session('welcome_message') }}
+    </div>
     
-    @props(['films'])      
-    @include('components.navbar', ['films' => $films])
+    <script>
+        // Hilangkan flash message setelah 2 detik
+        setTimeout(() => {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+                flashMessage.style.transition = 'opacity 0.5s ease';
+                flashMessage.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessage.remove();
+                }, 500); // Hapus elemen setelah animasi selesai
+            }
+        }, 2000);
+    </script>
+    @endif
+    
+
+    
+@props(['films', 'slideFilms', 'genres', 'tahuns', 'negaras'])
+
+@include('components.navbar', ['films' => $films])
+
 <div class="p-6">
-    @props(['films'])      
-    @include('components.slide',['films' => $films])
+    {{ $slot }}
+    @include('components.slide', ['films' => $films , 'slideFilms' => $slideFilms])
+    {{-- @include('components.kategori', ['films' => $films , 'genres' => $genres , 'tahuns' => $tahuns]) --}}
 </div>
-<div class="p-5">
-    @props(['films'])  {{-- Tambahkan props untuk menerima data films --}}
+<div class="p-6">
+
     @include('components.films', ['films' => $films])
-    {{-- {{ $slot }} --}}
 </div>
-        
+    @include('components.footer')
+
         
     
 

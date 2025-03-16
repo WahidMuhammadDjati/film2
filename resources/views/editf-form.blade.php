@@ -68,10 +68,6 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm">Rating:</label>
-                        <input type="number" name="rating" value="{{ $film->rating }}" class="w-full border p-2 rounded-md" required>
-                    </div>
-                    <div>
                         <label class="block text-sm">Durasi (menit):</label>
                         <input type="number" name="durasi" value="{{ $film->durasi }}" class="w-full border p-2 rounded-md" required>
                     </div>

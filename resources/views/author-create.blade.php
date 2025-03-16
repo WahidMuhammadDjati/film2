@@ -4,7 +4,7 @@
     <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white p-4 rounded-lg mt-24 mb-10 shadow-lg w-full max-w-3xl">
             <h2 class="text-lg font-semibold mb-3 text-center">Tambah Film</h2>
-            <form action="{{ route('films.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('author.film.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div>

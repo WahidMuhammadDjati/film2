@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,11 +15,19 @@ return new class extends Migration
             $table->string('name');      
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('role')->default('user');
+            $table->enum('role', ['user', 'admin', 'author'])->default('user'); // Role khusus
             $table->rememberToken();
             $table->timestamps();
         });
-        
+
+        Schema::create('films', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->string('poster')->nullable();
+            $table->foreignId('author_id')->constrained('users')->onDelete('cascade'); // Relasi ke users
+            $table->timestamps();
+        });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -43,6 +50,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('films');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

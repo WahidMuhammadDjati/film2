@@ -1,11 +1,10 @@
 @vite(['resources/css/app.css','resources/js/app.js'])
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <section class="bg-gray-50 dark:bg-gray-900">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-            <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-                <img class="w-8 h-8 mr-2" src="{{ asset('DJ.png') }}" alt="logo">
-                Store    
+    <section style="background-image: url('{{ asset('storage/images/film.jpg') }}');" class="bg-cover bg-center min-h-screen">
+        <div class="bg-black bg-opacity-20 min-h-screen flex flex-col items-center justify-center px-6 py-8 mx-auto">
+            <a href="#" class="flex items-center mb-6 text-5xl font-semibold text-white">
+                Review Film
             </a>
             @if (session('success'))
             <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
@@ -48,6 +47,5 @@
                 </div>
             </div>
         </div>
-
-
-      </section>
+    </section>
+    

@@ -2,56 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Watchlist;
 use App\Models\Film;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 class WatchlistController extends Controller
 {
     public function index()
     {
-        // Ambil daftar watchlist dari session
-        $watchlist = Session::get('watchlist', []);
-        $films = Film::all();
-        
+        // Ambil daftar watchlist dari database berdasarkan user yang login
+        $watchlist = Watchlist::where('user_id', Auth::id())->with('film')->get();
 
-        return view('watchlist', compact('watchlist','films'));
+        return view('watchlist', compact('watchlist'));
     }
 
-
-    public function add(Request $request, $id)
+    public function add($id)
     {
-        // Ambil daftar watchlist dari session
-        $watchlist = Session::get('watchlist', []);
+        // Pastikan film ada di database
+        $film = Film::findOrFail($id);
 
-        // Data film (contoh, nanti bisa ambil dari database jika perlu)
-        $film = [
-            'id' => $id,
-            'nama' => $request->nama,
-            'gambar' => $request->gambar,
-            'trailer' => $request->trailer
-        ];
-
-        // Cek apakah film sudah ada di watchlist
-        if (!array_key_exists($id, $watchlist)) {
-            $watchlist[$id] = $film;
-            Session::put('watchlist', $watchlist);
-        }
+        // Tambahkan ke watchlist
+        Watchlist::firstOrCreate([
+            'user_id' => Auth::id(),
+            'film_id' => $film->id,
+        ]);
 
         return redirect()->back()->with('success', 'Film ditambahkan ke watchlist!');
     }
 
     public function remove($id)
     {
-        // Ambil daftar watchlist dari session
-        $watchlist = Session::get('watchlist', []);
-
-        // Hapus film dari watchlist
-        if (isset($watchlist[$id])) {
-            unset($watchlist[$id]);
-            Session::put('watchlist', $watchlist);
-        }
+        // Hapus film dari watchlist berdasarkan user yang login
+        Watchlist::where('user_id', Auth::id())->where('film_id', $id)->delete();
 
         return redirect()->back()->with('success', 'Film dihapus dari watchlist!');
     }
 }
+
+

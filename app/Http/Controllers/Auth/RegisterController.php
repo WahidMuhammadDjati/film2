@@ -28,7 +28,7 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user',  // Pastikan ada field 'role' di database
+            'role' => 'author',  // Pastikan ada field 'role' di database
         ]);
 
         return redirect()->route('login')->with('success', 'Registration successful');

@@ -3,20 +3,21 @@
 namespace App\Models;
 
 use App\Models\Genre;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Film extends Model
 {
     protected $table = 'films';
-    protected $fillable = ['nama', 'gambar', 'trailer', 'tahun_id', 'negara_id', 'rating', 'durasi', 'deskripsi'];
+    protected $fillable = ['user_id','nama', 'gambar', 'trailer', 'tahun_id', 'negara_id', 'rating', 'durasi', 'deskripsi'];
 
-    public function genres()
+    public function Genres()
     {
         return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
     }
 
-    public function negara()
+    public function Negara()
     {
         return $this->belongsTo(Negara::class);
     }
@@ -29,6 +30,28 @@ class Film extends Model
     {
         return $this->hasMany(Komentar::class);
     }
+    
+    public function ratings() {
+        return $this->hasMany(Rating::class);
+    }
+    
+    public function getEmbedTrailerAttribute()
+    {
+        if (Str::contains($this->trailer, 'youtu.be')) {
+            return Str::replace('youtu.be/', 'www.youtube.com/embed/', explode('?', $this->trailer)[0]);
+        }
+
+        if (Str::contains($this->trailer, 'watch?v=')) {
+            return Str::replace('watch?v=', 'embed/', explode('?', $this->trailer)[0]);
+        }
+
+        return $this->trailer;
+    }
+        public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }
 
@@ -36,7 +59,7 @@ class Film extends Model
 
 
 
-// use App\Models\Film;
+// use App\Models\Film; 
 
 // Film::create([
 //     'nama' => 'The Matrix',

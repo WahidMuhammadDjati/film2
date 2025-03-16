@@ -21,17 +21,24 @@
                         <td class="border border-gray-300 p-2">{{ $user->email }}</td>
                         <td class="border border-gray-300 p-2">{{ $user->role }}</td> 
                         <td class="border border-gray-300 p-2 space-x-2">
-                            {{-- <div x-data="{ open: false }">
-                                <button @click="open = true" class="text-blue-500">Edit</button>
-                                @include('edit-user-form', ['user' => $user])
-                            </div> --}}
-
+                            <form action="{{ route('users.updateRole', $user->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('PUT')
+                                <select name="role" class="p-1 border border-gray-300 rounded">
+                                    <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="author" {{ $user->role === 'author' ? 'selected' : '' }}>Author</option>
+                                    <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
+                                </select>
+                                <button type="submit" class="text-blue-500 ml-2">Update</button>
+                            </form>
+                        
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
                                 @csrf
-                                @method('DELETE')  
+                                @method('DELETE')
                                 <button type="submit" class="text-red-500" onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</button>
                             </form>
                         </td>
+                        
                     </tr>
                 @endforeach
             </tbody>

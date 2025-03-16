@@ -9,6 +9,7 @@ use App\Models\Negara;
 use App\Models\Komentar;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class FilmController extends Controller
@@ -35,48 +36,52 @@ class FilmController extends Controller
             'genre_id.*' => 'exists:genre,id', // Pastikan setiap genre valid
             'tahun_id' => 'required|exists:tahun,id',
             'negara_id' => 'required|exists:negara,id',
-            'rating' => 'required|integer|min:1|max:10',
             'durasi' => 'required|integer|min:1',
         ]);
     
         // Upload gambar
         $gambarPath = $request->file('gambar')->store('films', 'public');
     
-        // Simpan film ke database
+        // Simpan film ke database dengan user_id
         $film = Film::create([
+            'user_id' => Auth::id(), // Menyimpan ID author yang login
             'nama' => $request->nama,
             'gambar' => $gambarPath,
             'trailer' => $request->trailer,
             'deskripsi' => $request->deskripsi,
             'tahun_id' => $request->tahun_id,
             'negara_id' => $request->negara_id,
-            'rating' => $request->rating,
             'durasi' => $request->durasi,
         ]);
     
         // Simpan genre ke tabel pivot
         $film->genres()->attach($request->genre_id);
     
-        return redirect()->route('admin.dashboard')->with('success', 'Film berhasil ditambahkan!');
+        return redirect()->route('author.dashboard')->with('success', 'Film berhasil ditambahkan!');
     }
     
     
-    public function index() //menampilkan data film ke dashboard user
+    
+    
+        public function index() 
     {
-        $films = Film::all(); // Ambil semua film dari database
+        $slideFilms = Film::inRandomOrder()->limit(5)->get(); // Ambil 5 film acak tetap
+        $films = Film::all(); // Semua film
+        $genres = Genre::all(); // Semua genre
+        $negaras = Negara::all(); // Semua negara
+        $tahuns = Tahun::all(); // Semua tahun
 
-        return view('dashboard', compact('films')); // Kirim data ke dashboard
+        return view('dashboard', compact('slideFilms', 'films', 'genres', 'negaras', 'tahuns'));
     }
+
     public function indexx() // menampilkan data film ke dashboard admin
     {
         $films = Film::all();
         $genres = Genre::all(); // Mengambil semua genre dari tabel Genre
         $negaras = Negara::all(); // Mengambil semua negara dari tabel Negara
         $tahuns = Tahun::all(); // Mengambil semua tahun dalam bentuk array sederhana
-
         // return view('createf', compact('films')); // Kirim data ke 
-        return view('createf', compact('films','genres', 'negaras', 'tahuns'));
-        
+        return view('createf', compact('films','genres', 'negaras', 'tahuns'));       
     }
 
 
@@ -118,7 +123,6 @@ class FilmController extends Controller
         'genre_id.*' => 'exists:genre,id', // Pastikan setiap genre ada di database
         'tahun_id' => 'required|exists:tahun,id', // Pastikan tahun ada di tabel tahuns
         'negara_id' => 'required|exists:negara,id', // Pastikan negara ada di tabel negarass
-        'rating' => 'required|numeric|min:0|max:10',
         'durasi' => 'required|integer|min:1',
         'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
@@ -138,7 +142,6 @@ class FilmController extends Controller
         'deskripsi' => $request->deskripsi,
         'tahun_id' => $request->tahun_id,
         'negara_id' => $request->negara_id,
-        'rating' => $request->rating,
         'durasi' => $request->durasi,
     ]);
 
@@ -160,6 +163,24 @@ class FilmController extends Controller
 
         return view('film', compact('film', 'komentar'));
     }
+
+
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $films = Film::where('nama', 'like', "%$query%")->get();
+
+       $slideFilms = Film::inRandomOrder()->limit(5)->get(); // Ambil 5 film acak tetap
+
+        // $films = Film::all(); // Semua film
+        $genres = Genre::all(); // Semua genre
+        $negaras = Negara::all(); // Semua negara
+        $tahuns = Tahun::all(); // Semua tahun
+
+        return view('dashboard', compact('slideFilms', 'films', 'genres', 'negaras', 'tahuns'));
+    }
+
 
 
 }

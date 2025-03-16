@@ -12,6 +12,15 @@ class UserController extends Controller
         $users = User::all(); // Ambil semua user dari database
         return view('creates', compact('users')); // Kirim data ke view
     }
+        public function updateRole(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->role = $request->input('role');
+        $user->save();
+
+        return redirect()->back()->with('success', 'Role berhasil diperbarui.');
+    }
+
 
     public function destroy($id) // menghapus data film
     {
