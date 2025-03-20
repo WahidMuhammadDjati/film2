@@ -75,10 +75,15 @@ class User extends Authenticatable
     {
         return $this->role === 'author';
     }
+    //     public function films()
+    // {
+    //     return $this->hasMany(Film::class);
+    // }
         public function films()
     {
-        return $this->hasMany(Film::class);
+        return $this->hasMany(Film::class, 'author_id');
     }
+
 
     
 }

@@ -1,4 +1,4 @@
-<x-layouta>
+<x-layoutthor>
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-semibold mb-4">Daftar Film</h1>
 
@@ -19,6 +19,7 @@
                     <th class="border border-gray-300 p-2">Genre</th>
                     <th class="border border-gray-300 p-2">Tahun</th>
                     <th class="border border-gray-300 p-2">Negara</th>
+                    <th class="border border-gray-300 p-2">Aktor</th>
                     <th class="border border-gray-300 p-2">Rating</th>
                     <th class="border border-gray-300 p-2">Durasi</th>
                     <th class="border border-gray-300 p-2">Aksi</th>
@@ -45,16 +46,24 @@
                         
                         <td class="border border-gray-300 p-2">{{ $film->tahun->nama_tahun }}</td>
                         <td class="border border-gray-300 p-2">{{ $film->negara->nama_negara }}</td>
+                        {{-- <td class="border border-gray-300 p-2">{{ $film->aktor->nama_aktor }}</td> --}}
+                        <td class="border border-gray-300 p-2">
+                            @if($film->aktors->isNotEmpty())
+                                {{ implode(', ', $film->aktors->pluck('nama_aktor')->toArray()) }}
+                            @else
+                                <span class="text-gray-500">Tidak ada aktor</span>
+                            @endif
+                        </td>
                         <td class="border border-gray-300 p-2">{{ number_format($film->ratings->avg('rating'), 1) ?? '0' }}</td>
                         <td class="border border-gray-300 p-2">{{ $film->durasi }} menit</td>
                         <td class="border border-gray-300 p-2 space-x-2">
                             <div x-data="{ open: false }">
                                 {{-- <a href="#" @click="open = true" class="text-blue-500">Edit</a> --}}
                             
-                                @include('editf-form')
+                                @include('author-edit')
                             </div>
                             {{-- <a href="{{ route('films.edit', $film->id) }}" class="text-blue-500">Edit</a> --}}
-                            <form action="{{ route('films.destroy', $film->id) }}" method="POST" class="inline">
+                            <form action="{{ route('author.film.destroy', $film->id) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-500" onclick="return confirm('Yakin ingin menghapus film ini?')">Hapus</button>
@@ -75,4 +84,4 @@
             document.getElementById('filmModal').classList.add('hidden');
         }
     </script> --}}
-</x-layouta>
+</x-layoutthor>

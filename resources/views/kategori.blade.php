@@ -82,6 +82,33 @@
                     </div>
                 </div>
 
+                <!-- Filter Rating -->
+                <div>
+                    <label for="rating" class="block font-semibold text-lg">Rating</label>
+                    <select name="rating" id="rating" class="w-full p-3 border rounded">
+                        <option value="">Semua Rating</option>
+                        @foreach($ratings as $rating)
+                            <option value="{{ $rating->id }}" {{ request('rating') == $rating->id ? 'selected' : '' }}>
+                                {{ $rating->rating }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                {{-- <!-- Filter Rating -->
+                <div>
+                    <label for="rating" class="block font-semibold text-lg">Rating</label>
+                    <select name="rating" id="rating" class="w-full p-3 border rounded">
+                        <option value="">Semua Rating</option>
+                        @for ($i = 1; $i <= 10; $i++)
+                            <option value="{{ $i }}" {{ request('rating') == $i ? 'selected' : '' }}>
+                                {{ $i }}
+                            </option>
+                        @endfor
+                    </select>
+                </div> --}}
+
+
                 <div class="flex justify-end mt-6">
                     <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 text-lg">Filter</button>
                     <button type="button" @click="open = false" class="ml-3 px-6 py-3 bg-gray-500 text-white rounded hover:bg-gray-600 text-lg">

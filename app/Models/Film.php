@@ -10,17 +10,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Film extends Model
 {
     protected $table = 'films';
-    protected $fillable = ['user_id','nama', 'gambar', 'trailer', 'tahun_id', 'negara_id', 'rating', 'durasi', 'deskripsi'];
+    protected $fillable = ['author_id','nama', 'gambar', 'trailer', 'tahun_id', 'negara_id', 'aktor_id', 'rating', 'durasi', 'deskripsi'];
 
     public function Genres()
     {
         return $this->belongsToMany(Genre::class, 'film_genre', 'film_id', 'genre_id');
     }
+    public function author()
+{
+    return $this->belongsTo(User::class, 'author_id');
+}
+
 
     public function Negara()
     {
         return $this->belongsTo(Negara::class);
     }
+        public function Aktors()
+    {
+        return $this->belongsToMany(Aktor::class, 'film_aktor','film_id','aktor_id');
+    }
+
     public function Tahun()
     {
         return $this->belongsTo(Tahun::class);

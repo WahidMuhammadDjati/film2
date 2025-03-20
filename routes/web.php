@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AktorController;
 use App\Models\Komentar;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,9 @@ Route::post('/logout', function () {
     return redirect('/dashboard');   
 })->name('logout');
 
+Route::post('/admin/logout', [LoginController::class, 'logouta'])->name('admin.logout');
+
+
 Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])->name('registrasi');
 Route::post('/registrasi', [RegisterController::class, 'registrasi']);
 
@@ -42,23 +46,34 @@ Route::post('/registrasi', [RegisterController::class, 'registrasi']);
 // Dashboard User
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('user.dashboard');
-// ->middleware('auth');
+})->name('user.dashboard')->middleware('auth');
 // Dashboard Admin
+
 Route::get('/admin', function () {
     return view('dashboardadmin');
 })->name('admin.dashboard')->middleware('auth');
 
 // Dashboard 
-Route::get('/dashboard', [FilmController::class, 'index'])->name('user.dashboard')->middleware('auth');
+Route::get('/dashboard', [FilmController::class, 'index'])->name('user.dashboard');
 
 // Author
 Route::get('/author', function () {
     return view('author');
 })->name('author.dashboard')->middleware('auth');
     
+
+
+// Author
 Route::get('/author/film/create', [AuthorController::class, 'create'])->name('author.film.create');
 Route::post('/author/film', [AuthorController::class, 'store'])->name('author.film.store');
+// Author Film update waktu edit
+Route::put('/author/films/{id}', [AuthorController::class, 'update'])->name('author.film.update');
+// Author Film edit
+Route::get('/author/films/{id}/edit', [AuthorController::class, 'edit'])->name('author.film.edit');
+// Author Film show
+Route::get('/film/{id}', [AuthorController::class, 'show'])->name('film.show');
+// Author Film delete
+Route::delete('/author/films/{id}',  [AuthorController::class, 'destroy'])->name('author.film.destroy');
 
 
 // Route::middleware(['auth', 'author'])->group(function () {
@@ -75,7 +90,7 @@ Route::get('/createf', [FilmController::class, 'indexx'])->name('films.createf')
 // Film create
 Route::post('/films/store', [FilmController::class, 'store'])->name('films.store');
 // Film delete
-Route::delete('/films/{id}', action: [FilmController::class, 'destroy'])->name('films.destroy');
+Route::delete('/films/{id}',  [FilmController::class, 'destroy'])->name('films.destroy');
 // Film edit
 Route::get('/films/{id}/edit', [FilmController::class, 'edit'])->name('films.edit');
 // Film update waktu edit
@@ -122,6 +137,20 @@ Route::delete('/negara/{id}', action: [NegaraController::class, 'destroy'])->nam
 Route::get('/negara/{id}/edit', [NegaraController::class, 'edit'])->name('negara.edit');
 // Negara update waktu edit
 Route::put('/negara/{id}', [NegaraController::class, 'update'])->name('negara.update');
+
+
+
+
+// Aktor
+Route::get('createa', [AktorController::class, 'create'])->name('aktor.create');
+// Aktor create
+Route::post('/aktor/store', [AktorController::class, 'store'])->name('aktor.store');
+// Aktor delete
+Route::delete('/aktor/{id}', action: [AktorController::class, 'destroy'])->name('aktor.destroy');
+// Aktor edit
+Route::get('/aktor/{id}/edit', [AktorController::class, 'edit'])->name('aktor.edit');
+// Aktor update waktu edit
+Route::put('/aktor/{id}', [AktorController::class, 'update'])->name('aktor.update');
 
 
 

@@ -1,8 +1,8 @@
 <div x-data="{ open: false }">
     <button @click="open = true" class="bg-blue-500 text-white px-4 py-2 rounded">Tambah Film</button>
 
-    <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-4 rounded-lg mt-24 mb-10 shadow-lg w-full max-w-3xl">
+    <div x-show="open" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl">
             <h2 class="text-lg font-semibold mb-3 text-center">Tambah Film</h2>
             <form action="{{ route('films.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -43,6 +43,14 @@
                             <option value="" disabled selected>Pilih Negara</option>
                             @foreach($negaras as $negara)
                                 <option value="{{ $negara->id }}">{{ $negara->nama_negara }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label for="aktor" class="block font-semibold text-lg">Aktor</label>
+                        <select name="aktor_id[]" id="aktor" class="w-full p-3 border rounded" multiple>
+                            @foreach($aktors as $aktor)
+                                <option value="{{ $aktor->id }}">{{ $aktor->nama_aktor }}</option>
                             @endforeach
                         </select>
                     </div>

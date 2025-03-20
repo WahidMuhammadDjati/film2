@@ -31,6 +31,19 @@
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                              <a href="{{ route('login') }}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">&laquo;Kembali</a>
                         </p>
+                        @if ($errors->any())
+                        <div x-data="{ showModal: true }" x-show="showModal" class="fixed inset-0 flex items-center justify-center z-50 bg-gray-500 bg-opacity-50">
+                            <div class="bg-white p-4 rounded-lg shadow-lg">
+                                <h2 class="text-lg font-semibold text-red-600">Kesalahan</h2>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                                <button @click="showModal = false" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Tutup</button>
+                            </div>
+                        </div>
+                        @endif                    
                     </form>
                 </div>
             </div>

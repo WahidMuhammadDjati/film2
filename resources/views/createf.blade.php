@@ -19,6 +19,7 @@
                     <th class="border border-gray-300 p-2">Genre</th>
                     <th class="border border-gray-300 p-2">Tahun</th>
                     <th class="border border-gray-300 p-2">Negara</th>
+                    <th class="border border-gray-300 p-2">Aktor</th>
                     <th class="border border-gray-300 p-2">Rating</th>
                     <th class="border border-gray-300 p-2">Durasi</th>
                     <th class="border border-gray-300 p-2">Aksi</th>
@@ -45,6 +46,13 @@
                         
                         <td class="border border-gray-300 p-2">{{ $film->tahun->nama_tahun }}</td>
                         <td class="border border-gray-300 p-2">{{ $film->negara->nama_negara }}</td>
+                        <td class="border border-gray-300 p-2">
+                            @if($film->aktors->isNotEmpty())
+                                {{ implode(', ', $film->aktors->pluck('nama_aktor')->toArray()) }}
+                            @else
+                                <span class="text-gray-500">Tidak ada aktor</span>
+                            @endif
+                        </td>
                         <td class="border border-gray-300 p-2">{{ number_format($film->ratings->avg('rating'), 1) ?? '0' }}</td>
                         <td class="border border-gray-300 p-2">{{ $film->durasi }} menit</td>
                         <td class="border border-gray-300 p-2 space-x-2">

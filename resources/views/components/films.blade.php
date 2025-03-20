@@ -66,7 +66,7 @@
                 </div>
                 @endforeach --}}
 
-                <a href="{{ route('film.show', $film->id) }}" class="w-full block text-center bg-gray-900 text-white py-1 mt-2 rounded-md">=APENI?=</a>
+                <a href="{{ route('film.show', $film->id) }}" class="w-full block text-center bg-gray-900 text-white py-1 mt-2 rounded-md">Detail Film</a>
                 
                 <!-- Tombol Trailer -->
                 {{-- <a href="{{ $film->trailer }}" target="_blank" class="w-full block text-center bg-gray-900 text-white py-1 mt-2 rounded-md">▶ Trailer</a> --}}

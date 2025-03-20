@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Film;
+use App\Models\Aktor;
 use App\Models\Genre;
 use App\Models\Tahun;
 use App\Models\Negara;
 use App\Models\Komentar;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,26 +27,26 @@ class FilmController extends Controller
     // }
 
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         $request->validate([
             'nama' => 'required|string|max:255',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer' => 'required|url',
             'deskripsi' => 'required',
-            'genre_id' => 'required|array', // Pastikan genre dikirim sebagai array
-            'genre_id.*' => 'exists:genre,id', // Pastikan setiap genre valid
+            'genre_id' => 'required|array',
+            'genre_id.*' => 'exists:genre,id',
             'tahun_id' => 'required|exists:tahun,id',
             'negara_id' => 'required|exists:negara,id',
+            'aktor_id' => 'required|array', // Validasi multiple aktor
+            'aktor_id.*' => 'exists:aktor,id',
             'durasi' => 'required|integer|min:1',
         ]);
     
-        // Upload gambar
         $gambarPath = $request->file('gambar')->store('films', 'public');
     
-        // Simpan film ke database dengan user_id
         $film = Film::create([
-            'user_id' => Auth::id(), // Menyimpan ID author yang login
+            'author_id' => Auth::id(),
             'nama' => $request->nama,
             'gambar' => $gambarPath,
             'trailer' => $request->trailer,
@@ -57,8 +59,12 @@ class FilmController extends Controller
         // Simpan genre ke tabel pivot
         $film->genres()->attach($request->genre_id);
     
-        return redirect()->route('author.dashboard')->with('success', 'Film berhasil ditambahkan!');
+        // Simpan aktor ke tabel pivot
+        $film->aktors()->attach($request->aktor_id);
+    
+        return redirect()->route('films.createf')->with('success', 'Film berhasil ditambahkan!');
     }
+    
     
     
     
@@ -70,8 +76,10 @@ class FilmController extends Controller
         $genres = Genre::all(); // Semua genre
         $negaras = Negara::all(); // Semua negara
         $tahuns = Tahun::all(); // Semua tahun
+        $ratings = Rating::all(); // Semua tahun
+        // $slideFilms = Film::orderBy('rating', 'desc')->limit(5)->get();
 
-        return view('dashboard', compact('slideFilms', 'films', 'genres', 'negaras', 'tahuns'));
+        return view('dashboard', compact('slideFilms', 'films', 'genres', 'negaras', 'tahuns','ratings'));
     }
 
     public function indexx() // menampilkan data film ke dashboard admin
@@ -80,8 +88,9 @@ class FilmController extends Controller
         $genres = Genre::all(); // Mengambil semua genre dari tabel Genre
         $negaras = Negara::all(); // Mengambil semua negara dari tabel Negara
         $tahuns = Tahun::all(); // Mengambil semua tahun dalam bentuk array sederhana
+        $aktors = Aktor::all(); // Mengambil semua tahun dalam bentuk array sederhana
         // return view('createf', compact('films')); // Kirim data ke 
-        return view('createf', compact('films','genres', 'negaras', 'tahuns'));       
+        return view('createf', compact('films','genres', 'negaras', 'tahuns','aktors'));       
     }
 
 
@@ -91,12 +100,12 @@ class FilmController extends Controller
 
     // return view('films.create', compact('genres', 'negaras', 'tahuns'));
     
-        public function destroy($id) // menghapus data film
+        public function destroy($id) // menghapus data film 
     {
         $film = Film::findOrFail($id);
         $film->delete();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Film berhasil dihapus!');
+        return redirect()->route('films.createf')->with('success', 'Film berhasil dihapus!');
     }
 
 
@@ -106,8 +115,9 @@ class FilmController extends Controller
         $genres = Genre::all();
         $tahuns = Tahun::all();
         $negaras = Negara::all();
+        $aktors = Aktor::all();
     
-        return view('editf-form', compact('film', 'genres', 'tahuns', 'negaras'));
+        return view('editf-form', compact('film', 'genres', 'tahuns', 'negaras','aktors'));
     }
     
 
@@ -122,7 +132,9 @@ class FilmController extends Controller
         'genre_id' => 'required|array', // Genre harus berupa array jika multiple
         'genre_id.*' => 'exists:genre,id', // Pastikan setiap genre ada di database
         'tahun_id' => 'required|exists:tahun,id', // Pastikan tahun ada di tabel tahuns
-        'negara_id' => 'required|exists:negara,id', // Pastikan negara ada di tabel negarass
+        'negara_id' => 'required|exists:negara,id',
+        'aktor_id' => 'required|array', // Genre harus berupa array jika multiple
+        'aktor_id.*' => 'exists:aktor,id',  // Pastikan negara ada di tabel negarass
         'durasi' => 'required|integer|min:1',
         'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
@@ -149,8 +161,11 @@ class FilmController extends Controller
     if ($request->has('genre_id')) {
         $film->genres()->sync($request->genre_id);
     }
+    if ($request->has('aktor_id')) {
+        $film->aktors()->sync($request->aktor_id);
+    }
 
-    return redirect()->route('admin.dashboard')->with('success', 'Film berhasil diperbarui!');
+    return redirect()->route('films.createf')->with('success', 'Film berhasil diperbarui!');
 }
 
 
@@ -177,8 +192,10 @@ class FilmController extends Controller
         $genres = Genre::all(); // Semua genre
         $negaras = Negara::all(); // Semua negara
         $tahuns = Tahun::all(); // Semua tahun
+        $ratings = Rating::all(); // Semua tahun
+        
 
-        return view('dashboard', compact('slideFilms', 'films', 'genres', 'negaras', 'tahuns'));
+        return view('dashboard', compact('slideFilms', 'films', 'genres', 'negaras', 'tahuns','ratings'));
     }
 
 

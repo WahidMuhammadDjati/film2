@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Film;
 use App\Models\Genre;
 use App\Models\Negara;
+use App\Models\Rating;
 use App\Models\Tahun;
 use Illuminate\Http\Request;
 
@@ -38,14 +39,19 @@ class KategoriController extends Controller
             $query->where('negara_id', $request->negara);
         }
 
+        if ($request->filled('rating')) {
+            $query->where('id', $request->rating);
+        }
+
         $films = $query->get();
         $genres = Genre::all();
         $tahuns = Tahun::all();
         $negaras = Negara::all();
+        $ratings = Rating::all();
 
         // Tetap ambil 5 film acak untuk carousel, jangan berdasarkan filter
         $slideFilms = Film::inRandomOrder()->limit(5)->get();
 
-        return view('dashboard', compact('films', 'slideFilms', 'genres', 'tahuns', 'negaras'));
+        return view('dashboard', compact('films', 'slideFilms', 'genres', 'tahuns', 'negaras','ratings'));
     }
 }

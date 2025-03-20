@@ -60,4 +60,12 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/dashbord');
     }
+    public function logouta(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
+    }
+
 }

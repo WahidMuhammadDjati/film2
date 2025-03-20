@@ -40,6 +40,7 @@
                     <p><strong>Genre:</strong> {{ implode(', ', $film->genres->pluck('nama_genre')->toArray()) }}</p>
                     <p><strong>Tahun:</strong> {{ $film->tahun->nama_tahun }}</p>
                     <p><strong>Negara:</strong> {{ $film->negara->nama_negara }}</p>
+                    <p><strong>Aktor:</strong> {{ implode(', ', $film->aktors->pluck('nama_aktor')->toArray()) }}</p>
                     {{-- <p><strong>Rating:</strong> {{ number_format($film->ratings->avg('rating'), 1) ?? '0' }}</p> --}}
                     <div class="flex items-center">
                         <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -64,7 +65,7 @@
                         <button type="submit" class="mt-2 bg-blue-500 px-4 py-2 rounded hover:bg-blue-600">Kirim</button>
                     </form>
                     @else
-                    <p class="text-gray-400">Silakan <a href="{{ route('login') }}" class="text-blue-400">login</a> untuk memberi komentar.</p>
+                    <p class="text-gray-400">Silakan <a href="{{ route('login') }}" class="text-blue-400">login</a> untuk memberi komentar dan rating.</p>
                     @endauth
                 
                     <div class="mt-6 space-y-4">
