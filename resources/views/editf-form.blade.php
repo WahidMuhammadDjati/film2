@@ -22,7 +22,7 @@
                         @if($film->gambar)
                             <div class="mt-2">
                                 <p class="text-sm text-gray-500">Gambar saat ini:</p>
-                                <img src="{{ asset('storage/' . $film->gambar) }}" alt="Gambar Film" class="w-5 h-5 object-cover rounded-md">
+                                    <img src="{{ asset('storage/' . $film->gambar) }}" alt="Gambar Film" class="w-5 h-5 object-cover rounded-md">
                             </div>
                         @endif
                     </div>
