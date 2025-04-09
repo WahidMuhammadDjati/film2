@@ -3,7 +3,7 @@
 Berikut adalah beberapa tampilan dari aplikasi sistem manajemen film:
 
 ### Halaman Beranda
-![Beranda](https://github.com/WahidMuhammadDjati/film2/blob/main/detail.png)
+![Beranda](https://github.com/WahidMuhammadDjati/film2/blob/main/beranda.png)
 
 ### Detail Film
 ![Detail Film](https://github.com/WahidMuhammadDjati/film2/blob/main/detail.png)
