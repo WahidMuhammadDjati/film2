@@ -3,10 +3,10 @@
 Berikut adalah beberapa tampilan dari aplikasi sistem manajemen film:
 
 ### Halaman Beranda
-![Beranda](public/images/beranda.png)
+![Beranda](public/storage/images/beranda.png)
 
 ### Detail Film
-![Detail Film](public/images/detail.png)
+![Detail Film](public/storage/images/detail.png)
 
 
 
