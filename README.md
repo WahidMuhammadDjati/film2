@@ -3,11 +3,10 @@
 Berikut adalah beberapa tampilan dari aplikasi sistem manajemen film:
 
 ### Halaman Beranda
-![Beranda](public/storage/images/beranda.png)
+![Beranda](https://raw.githubusercontent.com/WahidMuhammadDjati/film2/main/beranda.png)
 
 ### Detail Film
-![Detail Film](public/storage/images/detail.png)
-
+![Detail Film](https://raw.githubusercontent.com/WahidMuhammadDjati/film2/main/detail.png)
 
 
 # Project Laravel - Sistem Manajemen Film
